@@ -25,18 +25,27 @@ const kittyPrompts = {
         // ['Tiger', 'Snickers']
 
         /* CODE GOES HERE */
-
+    let results = []
+    let orangeKitties = kitties.filter((el) => el.color === 'orange')
+    orangeKitties.forEach((el) => results.push(el.name));
+    return results
     // Annotation:
     // Write your annotation here as a comment
+      // I started by finding each orange kitty from the dataset using the .filter
+      // function. Once I got that, the goal was to push each element to a variable
+      // I can return. I want to make this take less than 4 lines.
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
     /* CODE GOES HERE */
+  return kitties.sort((a, b) => b.age - a.age)
 
     // Annotation:
     // Write your annotation here as a comment
+    // This one was pretty simple because were only sorting the original Data set there
+    // is no need to return anythign other than the sorted version of that data set
   },
 
   growUp() {
@@ -54,6 +63,22 @@ const kittyPrompts = {
     // ...etc]
 
     /* CODE GOES HERE */
+    return kitties.map((el) => {
+      return {
+        name: el.name,
+        age: el.age + 2,
+        color: el.color
+      }
+    });
+    // WRONG GOAL
+    // return kitties.reduce((acc, el) => {
+    //   acc.push(el.age + 2);
+    //   return acc;
+    // },[]);
+    // Annotation:
+    I misread this one which is why there is a WRONG GOAL Section, still good 
+    practice regardless.
+
   }
 };
 

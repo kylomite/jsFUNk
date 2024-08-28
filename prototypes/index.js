@@ -76,9 +76,8 @@ const kittyPrompts = {
     //   return acc;
     // },[]);
     // Annotation:
-    I misread this one which is why there is a WRONG GOAL Section, still good 
-    practice regardless.
-
+    // I misread this one which is why there is a WRONG GOAL Section, still good 
+    // practice regardless.
   }
 };
 

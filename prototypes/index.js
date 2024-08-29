@@ -20,14 +20,14 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
-  orangePetNames() {
+  orangePetNames(animals) {
     // Return an array of just the names of kitties who are orange e.g.
         // ['Tiger', 'Snickers']
 
         /* CODE GOES HERE */
     let results = []
-    let orangeKitties = kitties.filter((el) => el.color === 'orange')
-    orangeKitties.forEach((el) => results.push(el.name));
+    let orangeAnimals = animals.filter((el) => el.color === 'orange')
+    orangeAnimals.forEach((el) => results.push(el.name));
     return results
     // Annotation:
     // Write your annotation here as a comment
@@ -36,11 +36,11 @@ const kittyPrompts = {
       // I can return. I want to make this take less than 4 lines.
   },
 
-  sortByAge() {
+  sortByAge(animals) {
     // Sort the kitties by their age
 
     /* CODE GOES HERE */
-  return kitties.sort((a, b) => b.age - a.age)
+  return animals.sort((a, b) => b.age - a.age)
 
     // Annotation:
     // Write your annotation here as a comment
@@ -48,7 +48,7 @@ const kittyPrompts = {
     // is no need to return anythign other than the sorted version of that data set
   },
 
-  growUp() {
+  growUp(animals) {
     // Return an array of kitties who have all grown up by 2 years e.g.
     // [{
     //   name: 'Felicia',
@@ -63,7 +63,7 @@ const kittyPrompts = {
     // ...etc]
 
     /* CODE GOES HERE */
-    return kitties.map((el) => {
+    return animals.map((el) => {
       return {
         name: el.name,
         age: el.age + 2,
@@ -75,6 +75,7 @@ const kittyPrompts = {
     //   acc.push(el.age + 2);
     //   return acc;
     // },[]);
+    
     // Annotation:
     // I misread this one which is why there is a WRONG GOAL Section, still good 
     // practice regardless.
@@ -86,6 +87,11 @@ const kittyPrompts = {
 // refactor the above functions using arguments and parameters so that
 // they can perform the same utility
 // for the kitties or puppers datasets, depending on what arguments you send through.
+
+// Annotation:
+// Changint this is simple enough, each top level function has been changed to require an
+//  argument(animals). From here insted of calling iterators in individual datasets we call 
+//  them on the parameter. This ensure we can call the functions on either kitties or puppers
 
 
 // ---------------------------------------------------------------------------

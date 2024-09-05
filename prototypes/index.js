@@ -107,7 +107,7 @@ const kittyPrompts = {
 
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
-  membersBelongingToClubs() {
+  membersBelongingToClubs(clubList) {
     // Your function should access the clubs data through a parameter (it is being passed as an argument in the test file)
     // Create an object whose keys are the names of people, and whose values are
     // arrays that include the names of the clubs that person is a part of. e.g.
@@ -117,10 +117,27 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    /* CODE GOES HERE */
+    //make results variable for storage 
+    //for each club instance
+    //  add student/clubs KVP to results variable, initialize value as empty array
+    //  if a student is a club participant, add that club to the students value array
 
-    // Annotation:
-    // Write your annotation here as a comment
+    /* CODE GOES HERE */
+    var results = [];
+    var countedStudents = [];
+    clubList.forEach((club) => {
+      for (let i = 0; i < club.members.length; i++) {
+        let member = club.members[i];
+        if(!(countedStudents.includes(member))) {
+          countedStudents.push(member)
+          results.push({
+            [member]: []
+          }); 
+          //add values to each objects
+        }
+      }
+      return results;
+    })
   }
 };
 
@@ -153,9 +170,23 @@ const modPrompts = {
     // ]
 
     /* CODE GOES HERE */
-
+    var results = mods.reduce((acc, el) => {
+      acc.push({
+        mod: el.mod,
+        studentsPerInstructor: el.students / el.instructors
+      });
+      return acc;
+    },[]);
+    return results
     // Annotation:
     // Write your annotation here as a comment
+    // I like using the reduce method, i think this was a good application of the reduce method
+    // because I am returing a single datatype (array) and we can push each object into the array
+    // as we iterate throught the proceess. We push each constructed value to the accumulator value
+    //  in line 162. we define what we are pushing in by referenceing both the specifc element (el)
+    // and the key's with dot notation to access their values. The math required to find the ratio
+    // of students to instructors is a simple division. I made sure to set my reduce method to a 
+    // results variable so I can return it once the iterator is completed.
   }
 };
 
@@ -188,7 +219,23 @@ const cakePrompts = {
 
     /* CODE GOES HERE */
 
+    // make results array
+    //for each cake object
+      // make new objject in results array
+      // poulate with flavor KVP and inStock KVP
+    return cakes.reduce((acc, el) => {
+      acc.push({
+        flavor: el.cakeFlavor,
+        inStock: el.inStock
+      })
+      return acc
+    },[])
     // Annotation:
+    
+    // we want to return an array of objects. We are taking the object in the
+    // original cake array, and trimming the unwanted data. I chose to do this
+    // with the reduce method where the accumulator is initially an empty array
+    // and we populate it with a push where we push an object only holding the values we want
     // Write your annotation here as a comment
   },
 
@@ -214,8 +261,19 @@ const cakePrompts = {
     // ]
 
     /* CODE GOES HERE */
+    // var results = [];
+    // cakes.forEach((el) => {
+    //   if (el.inStock != 0) {
+    //     results.push(el)
+    //   }
+    // })
+    // return results
 
+    return cakes.filter((el) => el.inStock != 0)
     // Annotation:
+    // I did this two WebAssembly, at first with a reduce method, but it works more 
+    // concisely with a filter() because we are returning the same Object, just based
+    // on if they meet a certain criteria
     // Write your annotation here as a comment
   },
 
@@ -224,8 +282,15 @@ const cakePrompts = {
     // 59
 
     /* CODE GOES HERE */
-
+    return cakes.reduce((acc, el) => {
+      acc += el.inStock;
+      return acc;
+    },0);
     // Annotation:
+    // since this method is accumulating the total inventory I used reduce to return
+    // the total amount of all inStock values as an integer. I made sure to define 
+    // the accumulator after the logic, even though it would default to zero. It has
+    // been suggested to do this for dev empathy.
     // Write your annotation here as a comment
   },
 
@@ -235,7 +300,15 @@ const cakePrompts = {
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
     /* CODE GOES HERE */
-
+    var result = [];
+    cakes.forEach((cake) => {
+          cake.toppings.forEach ((flavor) => {
+            if (!(result.includes(flavor))) {
+              result.push(flavor);
+            };
+          });
+    });
+    return result
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -252,7 +325,17 @@ const cakePrompts = {
     // }
 
     /* CODE GOES HERE */
-
+    var results = {};
+    cakes.forEach((cake) => {
+      cake.toppings.forEach ((flavor) => {
+        if (results[flavor] !== undefined) {
+          results[flavor] += 1;
+        } else {
+          results[flavor] = 1
+        }
+      });
+    })
+    return results
     // Annotation:
     // Write your annotation here as a comment
   }

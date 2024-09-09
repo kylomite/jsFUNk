@@ -128,7 +128,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Club Prompts", () => {
-    it.skip("membersBelongingToClubs", () => {
+    it("membersBelongingToClubs", () => {
       const e = clubPrompts.membersBelongingToClubs(clubs);
       expect(e).to.deep.equal({
         Louisa: ['Drama', 'Art'],
@@ -249,7 +249,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Class Prompts", () => {
-    it.skip("feClassrooms", () => {
+    it("feClassrooms", () => {
       const e = classPrompts.feClassrooms();
 
       expect(e).to.deep.equal([{
@@ -271,7 +271,7 @@ describe("PROTOTYPES", () => {
       }])
     });
 
-    it.skip("totalCapacities", () => {
+    it("totalCapacities", () => {
       const e = classPrompts.totalCapacities();
 
       expect(e).to.deep.equal({
@@ -280,7 +280,7 @@ describe("PROTOTYPES", () => {
       })
     });
 
-    it.skip("sortByCapacity", () => {
+    it("sortByCapacity", () => {
       const e = classPrompts.sortByCapacity();
 
       expect(e).to.deep.equal([{
@@ -375,20 +375,20 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Weather prompts", () => {
-    it.skip("getAverageTemps", () => {
+    it("getAverageTemps", () => {
       const e = weatherPrompts.getAverageTemps();
 
       expect(e).to.deep.equal([
         40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5
       ])
     }),
-      it.skip("findSunnySpots", () => {
+      it("findSunnySpots", () => {
         const e = weatherPrompts.findSunnySpots();
 
         expect(e).to.deep.equal(['Atlanta, Georgia is sunny.', 'New Orleans, Louisiana is sunny.', 'Raleigh, North Carolina is mostly sunny.']
         )
       }),
-      it.skip("findHighestHumidity", () => {
+      it("findHighestHumidity", () => {
         const e = weatherPrompts.findHighestHumidity();
 
         expect(e).to.deep.equal({
@@ -401,7 +401,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("National Park Prompts", () => {
-    it.skip("getParkVisitList", () => {
+    it("getParkVisitList", () => {
       const e = nationalParksPrompts.getParkVisitList();
 
       expect(e).to.deep.equal({
@@ -409,7 +409,7 @@ describe("PROTOTYPES", () => {
         parksVisited: ['Rocky Mountain', 'Acadia', 'Zion']
       })
     }),
-      it.skip("getParkActivities", () => {
+      it("getParkActivities", () => {
         const e = nationalParksPrompts.getParkActivities();
 
         expect(e).to.deep.equal(
@@ -427,7 +427,7 @@ describe("PROTOTYPES", () => {
             'rock climbing'
           ])
       }),
-      it.skip("getParkInEachState", () => {
+      it("getParkInEachState", () => {
         const e = nationalParksPrompts.getParkInEachState();
 
         expect(e).to.deep.equal(
@@ -443,13 +443,13 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Brewery Prompts", () => {
-    it.skip("getBeerCount", () => {
+    it("getBeerCount", () => {
       const e = breweryPrompts.getBeerCount();
 
       expect(e).to.deep.equal(40)
     });
 
-    it.skip("getBreweryBeerCount", () => {
+    it("getBreweryBeerCount", () => {
       const e = breweryPrompts.getBreweryBeerCount();
 
       expect(e).to.deep.equal([{
@@ -470,7 +470,7 @@ describe("PROTOTYPES", () => {
       }])
     });
 
-    it.skip("getSingleBreweryBeerCount", () => {
+    it("getSingleBreweryBeerCount", () => {
       const ratioCount = breweryPrompts.getSingleBreweryBeerCount('Ratio Beerworks');
       const plattCount = breweryPrompts.getSingleBreweryBeerCount('Platt Park Brewing Co.');
 

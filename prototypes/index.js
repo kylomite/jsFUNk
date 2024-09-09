@@ -12,6 +12,7 @@ const { bosses, sidekicks } = require('./datasets/bosses');
 const { constellations, stars } = require('./datasets/astronomy');
 const { weapons, characters } = require('./datasets/ultima');
 const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
+const { clubs } = require('./datasets/clubs');
 
 
 
@@ -123,25 +124,27 @@ const clubPrompts = {
     //  if a student is a club participant, add that club to the students value array
 
     /* CODE GOES HERE */
-    var results = [];
-    var countedStudents = [];
+    var results = {}
+    var countedStudents = []
     clubList.forEach((club) => {
-      for (let i = 0; i < club.members.length; i++) {
-        let member = club.members[i];
-        if(!(countedStudents.includes(member))) {
+      club.members.forEach((member) => {
+        if (!(countedStudents.includes(member))) {
           countedStudents.push(member)
-          results.push({
-            [member]: []
-          }); 
-          //add values to each objects
-        }
-      }
-      return results;
-    })
+          results[member] = [];
+        };
+        results[member].push(club.club);
+      });
+    });
+    return results;
   }
 };
 
-
+//Annotation:
+// This Sucked! Its funny how much time i spent failing to do this only to do it easily on a monday morning. I was able to
+// do nested forEach loops to gain access to the club members. To check if they've already been added to my resuls i want to
+// return i set up a countedStudents array to check if they've already been counted. Not sure if this is the most optimal way 
+// to do it but I did it anyway, and it works so its a good first iteration. Once  I add every student as a key with an array 
+// value, I will push the club as a value to the array value. I then return the result outside the forEach CSSLayerStatementRule.
 
 
 
@@ -369,7 +372,12 @@ const classPrompts = {
     // ]
 
     /* CODE GOES HERE */
-
+    return classrooms.reduce((acc, room) => {
+      if(room.program === 'FE') {
+        acc.push(room)
+      }
+      return acc;  
+    },[])
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -384,6 +392,33 @@ const classPrompts = {
 
     /* CODE GOES HERE */
 
+    function capacitySum(programAbbreviation) {
+      return classrooms.reduce((acc, room) => {
+        if(room.program === programAbbreviation) {
+          acc += room.capacity
+        }
+        return acc;  
+      },0);
+    }
+    // var feCap =  classrooms.reduce((acc, room) => {
+    //   if(room.program === 'FE') {
+    //     acc += room.capacity
+    //   }
+    //   return acc;  
+    // },0)
+
+    // var beCap =  classrooms.reduce((acc, room) => {
+    //   if(room.program === 'BE') {
+    //     acc += room.capacity
+    //   }
+    //   return acc;  
+    // },0)
+
+    return {
+      feCapacity: capacitySum('FE'),
+      beCapacity: capacitySum('BE')
+    }
+    
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -392,6 +427,7 @@ const classPrompts = {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
     /* CODE GOES HERE */
+    return classrooms.sort((a, b) => a.capacity - b.capacity)
 
     // Annotation:
     // Write your annotation here as a comment
@@ -471,7 +507,10 @@ const weatherPrompts = {
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
     /* CODE GOES HERE */
-
+    return weather.reduce((acc, el) => {
+      acc.push((el.temperature.high + el.temperature.low) / 2)
+      return acc;
+    },[]);
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -484,7 +523,13 @@ const weatherPrompts = {
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
     /* CODE GOES HERE */
-
+    var sunnyLocations = [];
+    weather.forEach((el)=> {
+      if(el.type ===  "sunny" || el.type === "mostly sunny") {
+        sunnyLocations.push(`${el.location} is ${el.type}.`);
+      };
+    });
+    return sunnyLocations;
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -499,6 +544,11 @@ const weatherPrompts = {
     // }
 
     /* CODE GOES HERE */
+    return weather.reduce((acc, el) => {
+      if (el.humidity > acc.humidity)
+        acc = el
+      return acc;
+    },weather[0]);
 
     // Annotation:
     // Write your annotation here as a comment
@@ -525,7 +575,17 @@ const nationalParksPrompts = {
     //}
 
     /* CODE GOES HERE */
-
+    return nationalParks.reduce((acc, el) => {
+      if(el.visited === true){
+        acc.parksVisited.push(el.name);
+      }else {
+        acc.parksToVisit.push(el.name);
+      };
+      return acc;
+    }, {
+        parksToVisit: [],
+        parksVisited: []
+      });
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -541,7 +601,12 @@ const nationalParksPrompts = {
 
 
     /* CODE GOES HERE */
-
+    return nationalParks.reduce((acc, el) => {
+      acc.push({
+        [el.location]: el.name
+      });
+      return acc;
+    },[]);
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -563,12 +628,20 @@ const nationalParksPrompts = {
     //   'rock climbing' ]
 
     /* CODE GOES HERE */
+    var result = [];
+    nationalParks.forEach((el) => {
+      el.activities.forEach((activity) => {
+        if(!(result.includes(activity))){
+          result.push(activity);
+        }
+      });
+    });
+    return result
 
     // Annotation:
     // Write your annotation here as a comment
   }
 };
-
 
 
 // ---------------------------------------------------------------------------
@@ -589,7 +662,10 @@ const breweryPrompts = {
     // 40
 
     /* CODE GOES HERE */
-
+    return breweries.reduce((acc, el) => {
+      acc += el.beers.length
+      return acc
+    },0)
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -604,7 +680,13 @@ const breweryPrompts = {
     // ]
 
     /* CODE GOES HERE */
-
+    return breweries.reduce((acc, el) => {
+      acc.push({
+        name: el.name,
+        beerCount: el.beers.length
+      });
+      return acc;
+    }, []);
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -616,6 +698,8 @@ const breweryPrompts = {
 
 
     /* CODE GOES HERE */
+    specificBrewery = breweries.find((el) => el.name === breweryName)
+    return specificBrewery.beers.length
 
     // Annotation:
     // Write your annotation here as a comment

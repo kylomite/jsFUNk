@@ -320,7 +320,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Book prompts", () => {
-    it.skip("removeViolence", () => {
+    it("removeViolence", () => {
       const e = bookPrompts.removeViolence(books);
 
       expect(e).to.deep.equal(['1984',
@@ -339,7 +339,7 @@ describe("PROTOTYPES", () => {
         'Treasure Island'])
     });
 
-    it.skip("getNewBooks", () => {
+    it("getNewBooks", () => {
       const e = bookPrompts.getNewBooks(books);
 
       expect(e).to.deep.equal([{
@@ -351,7 +351,7 @@ describe("PROTOTYPES", () => {
       }])
     });
 
-    it.skip("getBooksByYear", () => {
+    it("getBooksByYear", () => {
       const e = bookPrompts.getBooksByYear(books, 1990);
 
       expect(e).to.deep.equal([{
@@ -478,7 +478,7 @@ describe("PROTOTYPES", () => {
       expect(plattCount).to.equal(7);
     });
 
-    it.skip("findHighestAbvBeer", () => {
+    it("findHighestAbvBeer", () => {
       const e = breweryPrompts.findHighestAbvBeer();
 
       expect(e).to.deep.equal({
@@ -491,7 +491,7 @@ describe("PROTOTYPES", () => {
   });
 
   describe("Board Game Prompts", () => {
-    it.skip("listGames", () => {
+    it("listGames", () => {
       const strategyGames = boardGamePrompts.listGames('strategy');
       const childrensGames = boardGamePrompts.listGames('childrens');
       const partyGames = boardGamePrompts.listGames('party');
@@ -501,7 +501,7 @@ describe("PROTOTYPES", () => {
       expect(partyGames).to.deep.equal(["Werewolf", "Cards Against Humanity", "Codenames", "Sushi Go! Party", "Tsuro"]);
     });
 
-    it.skip("listGamesAlphabetically", () => {
+    it("listGamesAlphabetically", () => {
       const strategyGames = boardGamePrompts.listGamesAlphabetically('strategy');
       const childrensGames = boardGamePrompts.listGamesAlphabetically('childrens');
       const partyGames = boardGamePrompts.listGamesAlphabetically('party');
@@ -511,7 +511,7 @@ describe("PROTOTYPES", () => {
       expect(partyGames).to.deep.equal(["Cards Against Humanity", "Codenames", "Sushi Go! Party", "Tsuro", "Werewolf"]);
     });
 
-    it.skip("findHighestRatedGamesByType", () => {
+    it("findHighestRatedGamesByType", () => {
       const highestStrategy = boardGamePrompts.findHighestRatedGamesByType('strategy');
       const highestChildrens = boardGamePrompts.findHighestRatedGamesByType('childrens');
       const highestParty = boardGamePrompts.findHighestRatedGamesByType('party');
@@ -521,7 +521,7 @@ describe("PROTOTYPES", () => {
       expect(highestParty).to.deep.equal({ name: 'Codenames', rating: 7.4, maxPlayers: 8 });
     });
 
-    it.skip("averageScoreByType", () => {
+    it("averageScoreByType", () => {
       const avScoreStrat = boardGamePrompts.averageScoreByType('strategy');
       const avScoreChildren = boardGamePrompts.averageScoreByType('childrens');
       const avScoreParty = boardGamePrompts.averageScoreByType('party');
@@ -531,7 +531,7 @@ describe("PROTOTYPES", () => {
       expect(Math.round(avScoreParty * 100) / 100).to.equal(6.54);
     });
 
-    it.skip("averageScoreByTypeAndPlayers", () => {
+    it("averageScoreByTypeAndPlayers", () => {
       const avScoreStrat = boardGamePrompts.averageScoreByTypeAndPlayers('strategy', 2);
       const avScoreChildren = boardGamePrompts.averageScoreByTypeAndPlayers('childrens', 4);
       const avScoreParty = boardGamePrompts.averageScoreByTypeAndPlayers('party', 8);

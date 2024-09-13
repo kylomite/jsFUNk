@@ -13,6 +13,7 @@ const { constellations, stars } = require('./datasets/astronomy');
 const { weapons, characters } = require('./datasets/ultima');
 const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 const { clubs } = require('./datasets/clubs');
+const { books } = require('./datasets/books');
 
 
 
@@ -443,7 +444,7 @@ const classPrompts = {
 // DATASET: books from './datasets/books
 
 const bookPrompts = {
-  removeViolence() {
+  removeViolence(list) {
     // Your function should access the books data through a parameter (it is being passed as an argument in the test file)
     // return an array of all book titles that are not horror or true crime. Eg:
 
@@ -455,12 +456,17 @@ const bookPrompts = {
 
 
     /* CODE GOES HERE */
-
+    return list.reduce((acc, book) => {
+      if(!(book.genre === "Horror" || book.genre === "True Crime")) {
+        acc.push(book.title)
+      }
+      return acc;
+    },[]);
     // Annotation:
     // Write your annotation here as a comment
 
   },
-  getNewBooks() {
+  getNewBooks(list) {
     // return an array of objects containing all books that were
     // published in the 90's and 00's. Inlucde the title and the year Eg:
 
@@ -469,6 +475,15 @@ const bookPrompts = {
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
 
     /* CODE GOES HERE */
+    return list.reduce((acc, book) => {
+      if(book.published >= 1990){
+        acc.push({
+          title: book.title,
+          year: book.published
+        })
+      };
+      return acc;
+    },[]);
 
     // Annotation:
     // Write your annotation here as a comment
@@ -485,7 +500,15 @@ const bookPrompts = {
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
 
     /* CODE GOES HERE */
-
+    return books.reduce((acc, book) => {
+      if(book.published >= year){
+        acc.push({
+          title: book.title,
+          year: book.published
+        })
+      };
+      return acc;
+    },[]);
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -711,6 +734,24 @@ const breweryPrompts = {
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
     /* CODE GOES HERE */
+    var result;
+    var currentHighest = { 
+      name: 'B.B. Rodriguez', 
+      type: 'Coffee Double Brown', 
+      abv: 8, 
+      ibu: 30, 
+
+    };
+
+    breweries.forEach((el) => {
+      el.beers.forEach((beer) => {
+        if(beer.abv > currentHighest.abv){
+          currentHighest = beer
+          result = beer
+        };
+      });
+    })
+    return result;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -733,7 +774,24 @@ const boardGamePrompts = {
     // ["Chess", "Catan", "Checkers", "Pandemic", "Battle Ship", "Azul", "Ticket to Ride"]
 
     /* CODE GOES HERE */
-
+    // for (var key in boardGames) {
+    //   if(key === type){
+    //     return boardGames[key].reduce((acc, game) => {
+    //       acc.push(game.name)
+    //       return acc;
+    //     },[]);
+    //   };
+    // };
+    if (boardGames[type]) {
+      return boardGames[type].map(game => game.name);
+    }
+    
+    // var result = []
+    // boardGames.forEach((group) => {
+    //   //if(boardGames.group){}
+    //   result.push(group)
+    // });
+    // return boardGames.strategy
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -745,7 +803,12 @@ const boardGamePrompts = {
     // ["Candy Land", "Connect Four", "Operation", "Trouble"]
 
     /* CODE GOES HERE */
-
+    if(boardGames[type]){
+      var mappedObjects = boardGames[type].map((game) => game.name);
+      //return mappedObjects
+      var result = mappedObjects.sort((a, b) => a.localeCompare(b));
+      return result
+    }
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -756,7 +819,15 @@ const boardGamePrompts = {
     // { name: 'Codenames', rating: 7.4, maxPlayers: 8 },
 
     /* CODE GOES HERE */
-
+    if(boardGames[type]){
+      var result = boardGames[type][0]
+      boardGames[type].forEach((game) => {
+        if(game.rating > result.rating){
+          result = game
+        };
+      });
+      return result
+    }
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -767,7 +838,13 @@ const boardGamePrompts = {
     // note: do not worry about rounding your result.
 
     /* CODE GOES HERE */
-
+    if(boardGames[type]){
+      var scoreSum = boardGames[type].reduce((acc, game) => {
+        acc += game.rating;
+        return acc;
+      }, 0);
+      return scoreSum / boardGames[type].length;
+    }
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -779,7 +856,20 @@ const boardGamePrompts = {
     // note: do not worry about rounding your result.
 
     /* CODE GOES HERE */
-
+    var counter = 0;
+    var scoreSum;
+    if(boardGames[type]){
+      boardGames[type].forEach((game) => {
+        if(game.maxPlayers == maximumPlayers){
+          scoreSum = boardGames[type].reduce((acc, game) => {
+            acc += game.rating;
+            counter += 1
+            return acc;
+          }, 0);
+        }
+      }) 
+      return counter
+    }
     // Annotation:
     // Write your annotation here as a comment
   }
